@@ -12,7 +12,6 @@ include_once 'db.php';
         flex-basis: 50%;
     }
 </style>
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container">
 <div class="profile-wrapper">
     <?php include_once 'profile.php'; ?>
@@ -68,16 +67,12 @@ include_once 'db.php';
                             <hr />
                             <p style="font-weight:bold;">Komentarji: <?php echo $post['num_comments']; ?></p>
                         </div>
-                        <!-- /.sp-content -->
                     </div>
 
                     <?php }; ?>
                 </div>
-                <!-- /.stream-posts -->
             </div>
         </div>
-        <!-- /.tab-content -->
     </div>
-    <!-- /.profile-section-main -->
 </div>
 </div>

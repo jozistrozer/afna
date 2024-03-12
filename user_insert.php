@@ -1,4 +1,7 @@
 <?php
+/*
+    Skripta vstavi uporabnika v bazo
+*/
 include_once 'db.php';
 
 $first_name          = $_POST['first_name'];

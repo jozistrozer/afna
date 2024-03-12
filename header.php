@@ -35,8 +35,6 @@ include_once 'session.php';
         echo '<a class="nav-item nav-link" href="registration.php">Registriraj se</a>';
       }
       ?>
-
-      <!-- <input type="input" name="search" placeholder="Išči" class="form-control" style="margin-left:15%"/> -->
     </div>
   </div>
 </nav>

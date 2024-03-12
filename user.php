@@ -1,4 +1,7 @@
 <?php
+/*
+    Ta stran služi kot urejanje profila in pregled profila odvisno od vhodnih parametrov.
+*/
 $user_id = $_GET['user_id'];
 if (!isset($user_id) || $user_id == null) {
     header('Location: index.php');
@@ -8,17 +11,11 @@ include_once 'header.php';
 include_once 'db.php';
 ?>
 <link href="css/main.css" rel="stylesheet">
-<style>
-    .naslovna_slika {
-        height: 3 50px;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 50%;
-    }
 
-</style>
 <?php
+    /*
+        Pridobivanje vseh podatkov podanega uporabnika.
+    */
     $query = "select * from tab_users where id = ?";
     $stmt = $pdo->prepare($query);
     $stmt->execute([$user_id]);
@@ -26,6 +23,7 @@ include_once 'db.php';
 ?>
 <div class="container">
 <div class="profile-wrapper">
+    <!-- Profilni del -->
     <?php include_once 'profile.php'; ?>
 
     <div class="profile-section-main">
@@ -34,12 +32,18 @@ include_once 'db.php';
 
                 <div class="stream-posts">
                     <?php
+                        /*
+                            Poizvedovanje vseh objav uporabnika iz view-a v_posts.
+                        */
                         $query = "select *
                                     from v_posts
                                    where user_id = ?";
                         $stmt = $pdo->prepare($query);
                         $stmt->execute([$user_id]);
 
+                        /*
+                            Prikazovanje vseh objav.
+                        */
                         while ($post = $stmt->fetch()) {
                     ?>
                     <div class="stream-post">
@@ -48,6 +52,9 @@ include_once 'db.php';
                             <h6 class="sp-author-name"><a href="#"><?php echo $post['first_name'] . ' ' . $post['last_name']?></a></h6></div>
                         <div class="sp-content">
                             <?php
+                                /*
+                                    Omogočanje brisanje objave, če je prijavljen uporabnik na svojem profilu.
+                                */
                                 if ($user_id == $_SESSION['user_id']) {
                                     echo '<div style="display:flex;justify-content:right;"><a onclick="return confirm(\'Prepričani?\');" href="post_delete.php?id='. $post['id'] . '" style="color:red;text-decoration:none;">Izbriši</a></div>';
                                 }
@@ -58,6 +65,10 @@ include_once 'db.php';
                             <hr />
                             <div style="display:flex;gap:50px;flex-wrap:wrap;">
                                 <?php
+                                    /*
+                                        Prikazovanje slik za vsako objavo. Predogled slik je omejen na 5 slik per post.
+                                        Za več slik je potrebno iti direktno na objavo (post.php).
+                                    */
                                     $query = "select *
                                                 from tab_pictures
                                               where post_id = ? limit 5";
@@ -65,27 +76,23 @@ include_once 'db.php';
                                     $stmt->execute([$post['id']]);
 
                                     while ($post_pic = $stmt->fetch()) {
+                                        /*
+                                            Fiksiranje slik na width,height
+                                            TODO JS: Ob kliku na sliko se poveča. (dialogno okno)
+                                        */
                                         echo '<img src="'.$post_pic['url'].'" width=150 height=150>';
                                     }
                                 ?>
                             </div>
                             <hr />
+                            <!-- Prikazovanje število komentarjev na objavi (podatek se črpa iz view-a) -->
                             <p style="font-weight:bold;">Komentarji: <?php echo $post['num_comments']; ?></p>
                         </div>
-                        <!-- /.sp-content -->
                     </div>
                     <?php }; ?>
                 </div>
-                <!-- /.stream-posts -->
             </div>
         </div>
-        <!-- /.tab-content -->
     </div>
-    <!-- /.profile-section-main -->
 </div>
 </div>
-
-
-<?php
-include_once 'footer.php';
-?>

@@ -1,10 +1,5 @@
 <?php
   include_once 'header.php';
-  if (!empty($_GET)) {
-    $error = $_GET['p_error'];
-  } else {
-    $error = 0;
-  }
 ?>
 
 <html lang="en">
@@ -19,9 +14,6 @@
 
       <input type="input"    name="username" class="form-control" placeholder="Email naslov" required autofocus>
       <input type="password" name="password" class="form-control" placeholder="Geslo" required>
-      <?php if ($error == 1) { ?>
-      <span style="color:red;font-weight:bold;">Email ali geslo je napačno!</span>
-      <?php } ?>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Prijavi se</button>
     </form>
   </body>

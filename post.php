@@ -1,4 +1,7 @@
 <?php
+/*
+    Skripta ki prikazuje podroben ogled objave in komentiranje na objavo.
+*/
 include_once 'session.php';
 include_once 'header.php';
 include_once 'db.php';
@@ -58,7 +61,6 @@ include_once 'db.php';
                 <div class="sp-info">objavljeno <?php echo $comment['date_add']; ?></div>
                 <p class="sp-paragraph mb-0"><?php echo $comment['content']; ?></p>
             </div>
-            <!-- /.sp-content -->
         </div>
         <?php } ?>
         <form action="comment_insert.php" method="post">

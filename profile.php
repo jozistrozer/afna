@@ -1,19 +1,26 @@
 <?php
+    /*
+        Skripta ki renderira profilni "kvadrat" uporabnika
+        Deluje na podoben način kot user.php, ki podpira dinamično prikazovanje glede na podan id.
+    */
     include_once 'session.php';
     include_once 'db.php';
-    $own_profile = 0;
+
     if (isset($_GET['user_id'])) {
         $user_id = $_GET['user_id'];
     } else {
         $user_id = $_SESSION['user_id'];
     }
 
+    /*
+        Vsi podatki o uporabniku.
+    */
     $query = "select *, profile_picture(id) slika from tab_users where id = ?";
     $stmt = $pdo->prepare($query);
     $stmt->execute([$user_id]);
     $user = $stmt->fetch();
 
-
+    // TODO JS: prestavi v šifrant statusa razmerja
     if ($user['relationship_status'] == 0) {
         $relationship_status = 'Samski/samska';
     } elseif ($user['relationship_status'] == 1) {
@@ -23,14 +30,18 @@
     } else {
         $relationship_status = '';
     }
-
+    /*
+        Poizvedba število sledilcev ki jih ima uporabnik. TODO JS: Prestavi v funkcijo.
+    */
     $query = "select count(*) cnt from tab_user_follower where user_id = ?";
     $stmt = $pdo->prepare($query);
     $stmt->execute([$user_id]);
     $num_followers = $stmt->fetch();
     $num_followers = $num_followers['cnt'];
 
-
+    /*
+        Poizvedba število uporabnik katerim sledi. TODO JS: Prestavi v funkcijo.
+    */
     $query = "select count(*) cnt from tab_user_follower where follower_id = ?";
     $stmt = $pdo->prepare($query);
     $stmt->execute([$user_id]);
@@ -55,6 +66,9 @@
     <div style="display:flex;justify-content:center;">
     <?php
         if ($user_id != $_SESSION['user_id']) {
+            /*
+                Logika ali se uporabniku prikaže gumb za sledenje ali "odsledenje"
+            */
             $query = "select is_follower(?,?) is_following";
             $stmt = $pdo->prepare($query);
             $stmt->execute([$_SESSION['user_id'],$user_id]);

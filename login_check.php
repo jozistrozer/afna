@@ -18,6 +18,6 @@ if (!empty($username) && !empty($pass)) {
         header("Location: index.php");
     }
     else {
-        header("Location: login.php?p_error=1");
+        header("Location: login.php");
     }
 }

@@ -68,7 +68,5 @@ include_once 'header.php';
   </div>
   <button class="btn btn-lg btn-primary btn-block" style="margin-top:20px;" type="submit">Shrani podatke</button>
     </form>
-
-
   </body>
 </html>

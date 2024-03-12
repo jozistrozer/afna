@@ -13,7 +13,7 @@ if (!empty($description)) {
     $stmt = $pdo->prepare($query);
     $stmt->execute([$description, $user_id]);
 
-    // Ne najdem funkcije, da bi vrnala zadnji insertiram ID razen selecta.
+    // Ne najdem funkcije, da bi vrnala zadnji insertiran ID razen selecta.
     $query = "select * from tab_posts where user_id = ? order by id desc limit 1";
     $stmt = $pdo->prepare($query);
     $stmt->execute([$user_id]);

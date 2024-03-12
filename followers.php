@@ -42,6 +42,9 @@ if (isset($_GET['q'])) {
 
 <div id="container">
 <?php
+    /*
+        Iskanje sledilcev, listanje uporabnikov.
+    */
     include_once 'db.php';
     $query = "SELECT *, profile_picture(id) pic FROM tab_users where id <> :id
     and concat(first_name, ' ', last_name) like nvl(:query  ,concat(first_name, ' ', last_name))";
